@@ -1,0 +1,2598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#161b22" />
+  <title>Golden Navratna Kuber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 14px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input  { font-family: inherit; }
+    a      { text-decoration: none; }
+
+    /* ── Design Tokens ─────────────────────────── */
+    :root {
+      --bg-base:      #0d1117;
+      --bg-surface:   #161b22;
+      --bg-elevated:  #1c2128;
+      --bg-input:     #0d1117;
+      --bg-hover:     #21262d;
+
+      --border:       #30363d;
+      --border-muted: #21262d;
+      --border-hi:    #484f58;
+
+      --text:         #e6edf3;
+      --text-muted:   #8b949e;
+      --text-subtle:  #656d76;
+      --text-green:   #4ade80;   /* primary brand — readable on dark */
+      --text-success: #3fb950;   /* live dot / success states */
+      --text-red:     #f85149;
+
+      --primary:      #22c55e;   /* brand primary green */
+      --primary-hov:  #16a34a;
+      --primary-sub:  rgba(34,197,94,0.08);
+      --primary-bdr:  rgba(34,197,94,0.24);
+
+      --green:        #238636;
+      --green-hov:    #2ea043;
+      --red:          #da3633;
+      --red-hov:      #b91c1c;
+      --blue:         #1f6feb;
+      --blue-hov:     #388bfd;
+      --purple:       #6e40c9;
+      --purple-hov:   #8957e5;
+
+      --r:    6px;
+      --r-sm: 4px;
+      --r-md: 8px;
+
+      --sh-md: 0 4px 16px rgba(0,0,0,0.55);
+      --sh-lg: 0 8px 24px rgba(0,0,0,0.65);
+      --ease:  0.14s ease;
+    }
+
+    /* ── App Shell ─────────────────────────────── */
+    .app { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ════════════════════════════════════════════
+       TOPBAR
+    ════════════════════════════════════════════ */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      height: 54px;
+      display: flex; align-items: center;
+      padding: 0 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      gap: 0;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 9px;
+      flex: 1; min-width: 0;
+    }
+
+    .brand-icon { width: 28px; height: 28px; flex-shrink: 0; color: var(--text-green); }
+
+    .brand-name {
+      font-size: 0.9rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .brand-badge {
+      flex-shrink: 0;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-green);
+      background: var(--primary-sub);
+      border: 1px solid var(--primary-bdr);
+      padding: 2px 6px; border-radius: 3px;
+    }
+
+    /* Center cluster — desktop only */
+    .topbar-meta {
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .tmeta-block {
+      display: flex; flex-direction: column; align-items: center; gap: 1px;
+      padding: 0 14px;
+    }
+    .tmeta-label {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-subtle);
+    }
+    .tmeta-value {
+      font-size: 0.76rem; font-weight: 600; color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .tmeta-value.primary { color: var(--text-green); }
+    .tmeta-div { width: 1px; height: 26px; background: var(--border); }
+
+    /* Right side */
+    .topbar-right { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+
+
+    .btn-topbar-call {
+      display: flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 13px;
+      font-size: 0.76rem; font-weight: 600; color: #fff;
+      background: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--r);
+      text-decoration: none;
+      transition: background var(--ease), border-color var(--ease);
+    }
+    .btn-topbar-call:hover { background: var(--primary-hov); border-color: var(--primary-hov); }
+    .btn-topbar-call .lbl { display: inline; }
+
+    /* ════════════════════════════════════════════
+       STATUS STRIP
+    ════════════════════════════════════════════ */
+    .status-strip {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+      padding: 8px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .ss-left, .ss-right { display: flex; align-items: center; gap: 20px; }
+
+    .ss-item { display: flex; align-items: center; gap: 7px; }
+    .ss-icon { color: var(--text-subtle); flex-shrink: 0; }
+    .ss-body { display: flex; flex-direction: column; }
+    .ss-label { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-subtle); line-height: 1.2; }
+    .ss-value { font-size: 0.76rem; font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .ss-value.green  { color: var(--text-success); font-weight: 700; }
+    .ss-value.primary { color: var(--text-green); font-weight: 700; }
+
+    /* Countdown pill */
+    .cd-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--primary-sub); border: 1px solid var(--primary-bdr);
+      border-radius: var(--r); padding: 6px 12px;
+    }
+    .cd-icon { color: var(--text-green); flex-shrink: 0; }
+    .cd-body { display: flex; flex-direction: column; }
+    .cd-label { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); line-height: 1.2; }
+    .cd-value { font-size: 1.05rem; font-weight: 700; color: var(--text-green); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; line-height: 1.2; }
+
+    /* ════════════════════════════════════════════
+       TAB BAR
+    ════════════════════════════════════════════ */
+    .tab-bar {
+      display: flex; align-items: stretch;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      flex-shrink: 0;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+
+    .tab {
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 18px; height: 42px;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
+      border: none; border-bottom: 2px solid transparent;
+      background: transparent; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      margin-bottom: -1px;
+      transition: color var(--ease), border-color var(--ease), background var(--ease);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab:hover:not(.active) { color: var(--text); background: var(--bg-hover); }
+    .tab.active { color: var(--text-green); border-bottom-color: var(--primary); font-weight: 600; }
+
+    /* ════════════════════════════════════════════
+       CONTENT AREA
+    ════════════════════════════════════════════ */
+    .content {
+      flex: 1; padding: 16px 20px 32px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+
+    /* ════════════════════════════════════════════
+       PANEL
+    ════════════════════════════════════════════ */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 16px;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-muted);
+      gap: 8px;
+    }
+    .panel-title { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+
+    .draw-badge {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.7rem; font-weight: 500; color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .draw-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--primary); flex-shrink: 0;
+      animation: blink 2s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* ════════════════════════════════════════════
+       TABLE  — works on all screen sizes.
+       On mobile: sticky Name column + horizontal scroll.
+    ════════════════════════════════════════════ */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    /* Scroll-hint shadow on right edge */
+    .table-wrap-inner {
+      position: relative;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    thead th {
+      position: sticky; top: 0;
+      padding: 9px 8px;
+      font-size: 0.63rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text-subtle); text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Sticky Name + Win columns */
+    th.th-name {
+      text-align: left; padding-left: 14px;
+      position: sticky; left: 0; z-index: 3;
+      background: var(--bg-elevated);
+      min-width: 110px;
+      box-shadow: 1px 0 0 var(--border);
+    }
+    th.th-win {
+      color: var(--text-green);
+      position: sticky; left: 110px; z-index: 3;
+      background: var(--bg-elevated);
+      min-width: 52px;
+      box-shadow: 1px 0 0 var(--border);
+    }
+
+    th.th-range { min-width: 66px; }
+    th.th-stat  { min-width: 48px; }
+    th.th-draw  { color: var(--text-green); min-width: 70px; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border-muted);
+      transition: background var(--ease);
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    tbody td {
+      padding: 9px 8px; text-align: center; vertical-align: middle;
+    }
+
+    td.td-name {
+      text-align: left; padding-left: 14px;
+      font-weight: 700; font-size: 0.82rem; color: var(--text);
+      position: sticky; left: 0; z-index: 1;
+      background: var(--bg-surface);
+      box-shadow: 1px 0 0 var(--border);
+    }
+    tbody tr:hover td.td-name { background: var(--bg-hover); }
+
+    td.td-win {
+      font-weight: 700; color: var(--text-green);
+      font-variant-numeric: tabular-nums;
+      position: sticky; left: 110px; z-index: 1;
+      background: var(--bg-surface);
+      box-shadow: 1px 0 0 var(--border);
+    }
+    tbody tr:hover td.td-win { background: var(--bg-hover); }
+
+    td.td-stat { font-weight: 700; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    td.td-draw { font-weight: 600; color: var(--text-muted); background: var(--primary-sub); font-variant-numeric: tabular-nums; }
+
+    /* ── Number Input ── */
+    .num-input {
+      width: 56px; height: 34px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      font-family: inherit; font-size: 0.8rem; font-weight: 500;
+      text-align: center; outline: none;
+      -moz-appearance: textfield;
+      transition: border-color var(--ease), background var(--ease);
+      /* Show numpad on mobile */
+      inputmode: numeric;
+    }
+    .num-input::-webkit-outer-spin-button,
+    .num-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .num-input:hover:not(:focus) { border-color: var(--border-hi); }
+    .num-input:focus { border-color: var(--primary); background: var(--bg-elevated); }
+
+    /* ── Contact Row (Replaces Login) ── */
+    .contact-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 13px 18px;
+      border-top: 1px solid var(--border-muted);
+      background: var(--bg-elevated);
+      flex-wrap: wrap;
+    }
+    .contact-left {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .contact-badge {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-green);
+      background: var(--primary-sub); border: 1px solid var(--primary-bdr);
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .contact-desc {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 500;
+    }
+    .btn-call-main {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 38px; padding: 0 18px;
+      background: var(--primary); border: 1px solid var(--primary);
+      border-radius: var(--r); color: #fff;
+      font-size: 0.82rem; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: background var(--ease), transform var(--ease);
+      white-space: nowrap;
+    }
+    .btn-call-main:hover { background: var(--primary-hov); border-color: var(--primary-hov); }
+    .btn-call-main:active { transform: scale(0.98); }
+
+    /* ════════════════════════════════════════════
+       BUTTONS
+    ════════════════════════════════════════════ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      height: 34px; padding: 0 14px;
+      font-family: inherit; font-size: 0.78rem; font-weight: 600;
+      border: 1px solid transparent; border-radius: var(--r);
+      cursor: pointer; white-space: nowrap;
+      transition: background var(--ease), border-color var(--ease), opacity var(--ease);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { opacity: 0.82; }
+
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hov); border-color: var(--primary-hov); }
+
+    .btn-green   { background: var(--green);  border-color: var(--green);  color: #fff; }
+    .btn-green:hover  { background: var(--green-hov);  border-color: var(--green-hov);  }
+
+    .btn-red     { background: var(--red);    border-color: var(--red);    color: #fff; }
+    .btn-red:hover    { background: var(--red-hov);    border-color: var(--red-hov);    }
+
+    .btn-blue    { background: var(--blue);   border-color: var(--blue);   color: #fff; }
+    .btn-blue:hover   { background: var(--blue-hov);   border-color: var(--blue-hov);   }
+
+    .btn-purple  { background: var(--purple); border-color: var(--purple); color: #fff; }
+    .btn-purple:hover { background: var(--purple-hov); border-color: var(--purple-hov); }
+
+    .btn-ghost   { background: transparent; border-color: var(--border); color: var(--text-muted); }
+    .btn-ghost:hover  { background: var(--bg-hover); color: var(--text); border-color: var(--border-hi); }
+
+    .btn-danger-soft { background: transparent; border-color: rgba(218,54,51,0.4); color: var(--text-red); }
+    .btn-danger-soft:hover { background: rgba(218,54,51,0.1); }
+
+    /* ── Desktop action row ── */
+    .action-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .spacer { flex: 1; }
+
+    /* ════════════════════════════════════════════
+       MOBILE FIXED BOTTOM BAR
+    ════════════════════════════════════════════ */
+    .mobile-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
+      background: var(--bg-surface); border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      flex-direction: column; gap: 8px;
+    }
+
+    .mobile-bar-primary { display: flex; gap: 8px; }
+    .mobile-bar-secondary { display: flex; gap: 6px; }
+
+    .mobile-bar-primary .btn { flex: 1; height: 44px; font-size: 0.84rem; border-radius: var(--r-md); }
+    .mobile-bar-secondary .btn { flex: 1; height: 36px; font-size: 0.72rem; }
+
+    /* ════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════ */
+    .footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      padding: 13px 20px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .fi { display: flex; align-items: center; gap: 5px; font-size: 0.68rem; color: var(--text-subtle); }
+    .fi a { color: var(--text-muted); transition: color var(--ease); }
+    .fi a:hover { color: var(--text-green); }
+    .fdiv { width: 1px; height: 12px; background: var(--border); }
+
+    /* ════════════════════════════════════════════
+       SNACKBAR
+    ════════════════════════════════════════════ */
+    .snack-host {
+      position: fixed; bottom: 16px; right: 16px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 6px; pointer-events: none;
+    }
+    .snack {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border); border-left: 3px solid var(--border);
+      border-radius: var(--r-md);
+      box-shadow: var(--sh-lg);
+      font-size: 0.76rem; font-weight: 500; color: var(--text-muted);
+      pointer-events: auto; max-width: 290px;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .snack.success { border-left-color: var(--text-success); }
+    .snack.error   { border-left-color: var(--text-red); }
+    .snack.info    { border-left-color: var(--primary); }
+    .snack-icon { flex-shrink: 0; }
+    .snack.success .snack-icon { color: var(--text-success); }
+    .snack.error   .snack-icon { color: var(--text-red); }
+    .snack.info    .snack-icon { color: var(--text-green); }
+
+    /* ════════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════════ */
+
+    /* Tablet ≤ 900px */
+    @media (max-width: 900px) {
+      .topbar-meta { display: none; }
+    }
+
+    /* Mobile ≤ 680px */
+    @media (max-width: 680px) {
+      /* Topbar */
+      .topbar { padding: 0 12px; height: 50px; }
+      .brand-name { font-size: 0.82rem; }
+      .btn-topbar-call .lbl { display: none; }
+      .btn-topbar-call { padding: 0 9px; height: 32px; }
+
+      /* Status strip — stack the two groups */
+      .status-strip { padding: 0; flex-direction: column; gap: 0; }
+      .ss-left  { width: 100%; padding: 9px 12px; justify-content: space-between; border-bottom: 1px solid var(--border-muted); }
+      .ss-right { width: 100%; padding: 8px 12px; justify-content: space-between; }
+      .cd-pill  { padding: 5px 10px; }
+      .cd-value { font-size: 0.95rem; }
+
+      /* Tabs */
+      .tab { padding: 0 14px; height: 40px; font-size: 0.75rem; }
+      .tab svg { display: none; }
+
+      /* Content */
+      .content { padding: 10px 10px calc(120px + env(safe-area-inset-bottom)); gap: 10px; }
+
+      /* Panel header */
+      .panel-header { padding: 10px 12px; }
+      .panel-title  { font-size: 0.78rem; }
+
+      /* Table ─────────────────────────────────
+         Core mobile table strategy:
+         - Outer .table-wrap scrolls horizontally
+         - Name column sticky at left=0
+         - Win column sticky at left=110px
+         - Inputs are touch-friendly (40px tall)
+         - Compact column widths
+      ──────────────────────────────────────── */
+      .table-wrap {
+        /* Subtle right-fade hints that table scrolls */
+        -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+        mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+      }
+
+      table { font-size: 0.76rem; }
+
+      thead th { padding: 8px 5px; font-size: 0.58rem; }
+      tbody td  { padding: 7px 5px; }
+
+      th.th-name, td.td-name { min-width: 90px; padding-left: 10px; font-size: 0.78rem; }
+      th.th-win , td.td-win  { left: 90px; min-width: 44px; }
+
+      th.th-range { min-width: 58px; }
+      th.th-stat  { min-width: 42px; }
+      th.th-draw  { min-width: 58px; }
+
+      .num-input {
+        width: 50px; height: 40px; font-size: 0.82rem;
+        border-radius: var(--r-sm);
+      }
+
+      /* Contact row — stack on mobile */
+      .contact-row {
+        flex-direction: column; align-items: stretch; gap: 10px;
+        padding: 12px;
+      }
+      .contact-left { flex-direction: column; align-items: flex-start; gap: 5px; }
+      .btn-call-main { width: 100%; height: 44px; justify-content: center; font-size: 0.88rem; }
+
+      /* Hide desktop action row, show mobile bar */
+      .action-row { display: none; }
+      .mobile-bar { display: flex; }
+
+      /* Snackbar above mobile bar */
+      .snack-host { bottom: 130px; left: 10px; right: 10px; }
+      .snack { max-width: 100%; }
+
+      /* Footer */
+      .footer { flex-direction: column; gap: 5px; padding: 12px 14px; }
+      .fdiv   { display: none; }
+      .fi     { justify-content: center; }
+    }
+
+    /* Small phone ≤ 420px */
+    @media (max-width: 420px) {
+      html { font-size: 13px; }
+      .topbar { height: 46px; }
+      .brand-badge { display: none; }
+
+      th.th-name, td.td-name { min-width: 80px; }
+      th.th-win , td.td-win  { left: 80px; }
+
+      .num-input { width: 44px; height: 42px; }
+
+      .content { padding: 8px 8px calc(115px + env(safe-area-inset-bottom)); }
+    }
+
+    /* ── Draw result flash animation ─────────────── */
+    @keyframes draw-flash {
+      0%   { background: rgba(34,197,94,0.35); color: #fff; transform: scale(1.12); }
+      60%  { background: rgba(34,197,94,0.15); }
+      100% { background: var(--primary-sub);   color: var(--text-muted); transform: scale(1); }
+    }
+    td.td-draw.flashing {
+      animation: draw-flash 1.2s ease forwards;
+      font-weight: 800;
+    }
+
+    /* Draw result banner */
+    .draw-banner {
+      position: fixed; top: 62px; left: 50%; transform: translateX(-50%);
+      z-index: 200;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--primary-bdr); border-left: 3px solid var(--primary);
+      border-radius: var(--r-md);
+      padding: 10px 18px;
+      box-shadow: var(--sh-lg);
+      font-size: 0.8rem; font-weight: 600; color: var(--text);
+      white-space: nowrap;
+      pointer-events: none;
+      animation: banner-in 0.28s ease;
+    }
+    .draw-banner-icon { color: var(--text-green); flex-shrink: 0; }
+
+    /* ── Admin Drawer & Modal ────────────────────── */
+    .admin-drawer-backdrop {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .admin-drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .admin-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 1001;
+      width: min(480px, 100vw);
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      box-shadow: var(--sh-lg);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    .admin-drawer-backdrop.open .admin-drawer {
+      transform: translateX(0);
+    }
+
+    .ad-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .ad-title {
+      font-size: 0.95rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ad-badge {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #0d1117; background: var(--primary);
+      padding: 2px 7px; border-radius: 4px;
+    }
+    .ad-close {
+      width: 32px; height: 32px; border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); transition: background var(--ease), color var(--ease);
+    }
+    .ad-close:hover { background: var(--bg-hover); color: var(--text); }
+
+    .ad-body {
+      flex: 1; overflow-y: auto; padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+
+    .ad-card {
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 14px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .ad-card-title {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .ad-override-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-muted);
+    }
+    .ad-override-row:last-child { border-bottom: none; }
+    .ad-coupon-info { display: flex; flex-direction: column; }
+    .ad-coupon-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    .ad-coupon-cur { font-size: 0.68rem; color: var(--text-green); font-weight: 600; }
+
+    .ad-input-num {
+      width: 70px; height: 34px; background: var(--bg-input);
+      border: 1px solid var(--border); border-radius: var(--r);
+      color: var(--text); font-size: 0.88rem; font-weight: 700;
+      text-align: center; outline: none; transition: border-color var(--ease);
+    }
+    .ad-input-num:focus { border-color: var(--primary); }
+
+    .ad-btn-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .ad-btn-row .btn { flex: 1; height: 38px; }
+
+    .ad-footer-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; background: var(--bg-elevated);
+      border-top: 1px solid var(--border-muted);
+    }
+
+    /* ── Report Modal ────────────────────────────── */
+    .report-modal-backdrop {
+      position: fixed; inset: 0; z-index: 1050;
+      background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .report-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .report-modal {
+      width: min(680px, 100%); max-height: 86vh;
+      background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      box-shadow: var(--sh-lg);
+      display: flex; flex-direction: column; overflow: hidden;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .report-modal-backdrop.open .report-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .report-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-muted);
+    }
+    .report-title-wrap { display: flex; align-items: center; gap: 10px; }
+    .report-title { font-size: 0.96rem; font-weight: 700; color: var(--text); }
+    .report-badge {
+      font-size: 0.64rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-blue);
+      background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.25);
+      padding: 2px 7px; border-radius: 4px;
+    }
+    .report-close {
+      width: 32px; height: 32px; border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); cursor: pointer;
+      transition: background var(--ease), color var(--ease);
+    }
+    .report-close:hover { background: var(--bg-hover); color: var(--text); }
+
+    .report-filter-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px; background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap; gap: 8px;
+    }
+    .report-tabs { display: flex; gap: 6px; }
+    .report-tab-btn {
+      padding: 6px 14px; font-size: 0.74rem; font-weight: 600;
+      border-radius: var(--r); border: 1px solid var(--border);
+      background: var(--bg-elevated); color: var(--text-muted);
+      cursor: pointer; transition: all var(--ease);
+    }
+    .report-tab-btn:hover { background: var(--bg-hover); color: var(--text); }
+    .report-tab-btn.active {
+      background: var(--primary-sub); border-color: var(--primary);
+      color: var(--text-green); font-weight: 700;
+    }
+    .report-count-label { font-size: 0.72rem; color: var(--text-subtle); }
+
+    .report-body {
+      flex: 1; overflow-y: auto; overscroll-behavior: contain;
+    }
+    .report-table {
+      width: 100%; border-collapse: collapse; font-size: 0.8rem;
+    }
+    .report-table th {
+      position: sticky; top: 0; z-index: 2;
+      background: var(--bg-elevated); padding: 10px 16px;
+      text-align: left; font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-subtle); border-bottom: 1px solid var(--border);
+    }
+    .report-table td {
+      padding: 10px 16px; border-bottom: 1px solid var(--border-muted);
+      vertical-align: middle;
+    }
+    .report-table tr:hover { background: rgba(255,255,255,0.02); }
+    .report-num-pill {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+      font-weight: 700; color: var(--text-green);
+      background: var(--primary-sub); border: 1px solid var(--primary-bdr);
+    }
+
+    .report-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; background: var(--bg-elevated);
+      border-top: 1px solid var(--border-muted);
+      font-size: 0.72rem; color: var(--text-subtle);
+    }
+
+    /* ══════════════════════════════════════════════
+       FULL-SCREEN ADMIN VIEW STYLES
+    ══════════════════════════════════════════════ */
+    #view-admin { display: none; width: 100%; min-height: 100vh; background: var(--bg-base); }
+    #view-public { display: block; width: 100%; }
+
+    .brand-wrap { display: flex; align-items: center; gap: 10px; }
+    .brand-badge-admin {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #0d1117; background: var(--primary);
+      padding: 2px 7px; border-radius: 4px;
+    }
+    .brand-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+    .brand-sub { font-size: 0.7rem; color: var(--text-subtle); }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+    .status-indicator {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.74rem; font-weight: 500; color: var(--text-muted);
+      background: var(--bg-elevated); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 5px 11px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text-success); box-shadow: 0 0 6px rgba(63,185,80,0.6);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    .btn-topbar {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 32px; padding: 0 12px; font-size: 0.76rem; font-weight: 600;
+      border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--bg-elevated); color: var(--text);
+      transition: background var(--ease), border-color var(--ease);
+      cursor: pointer;
+    }
+    .btn-topbar:hover { background: var(--bg-hover); border-color: var(--border-hi); }
+    .btn-topbar.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-topbar.primary:hover { background: var(--primary-hov); }
+
+    .admin-body {
+      max-width: 1200px; width: 100%; margin: 0 auto;
+      padding: 24px; display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .stat-card {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--text-subtle);
+    }
+    .stat-label {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-subtle);
+    }
+    .stat-value {
+      font-size: 1.55rem; font-weight: 700; color: var(--text);
+      font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums;
+      line-height: 1.2; margin-top: 4px;
+    }
+    .stat-value.green { color: var(--text-green); }
+    .stat-value.blue { color: var(--text-blue); }
+    .stat-value.purple { color: var(--text-purple); }
+    .stat-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    .card {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--r-md); overflow: hidden;
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-muted); flex-wrap: wrap; gap: 8px;
+    }
+    .card-title {
+      font-size: 0.88rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+    .info-banner {
+      background: var(--bg-elevated); border: 1px solid var(--border-muted);
+      border-left: 3px solid var(--primary); border-radius: var(--r);
+      padding: 12px 16px; font-size: 0.77rem; color: var(--text-muted); line-height: 1.5;
+    }
+    .queued-status-box {
+      background: var(--bg-base); border: 1px solid var(--border);
+      border-radius: var(--r-sm); padding: 12px 16px; font-size: 0.78rem;
+      line-height: 1.45; min-height: 42px; display: flex; align-items: center;
+    }
+
+    .override-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .override-table th {
+      padding: 10px 14px; text-align: left; font-size: 0.66rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-subtle);
+      background: var(--bg-elevated); border-bottom: 1px solid var(--border);
+    }
+    .override-table td {
+      padding: 12px 14px; border-bottom: 1px solid var(--border-muted);
+      vertical-align: middle;
+    }
+    .override-table tr:last-child td { border-bottom: none; }
+    .override-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+    .coupon-title-cell { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+    .coupon-current-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700;
+      color: var(--text-green); background: var(--primary-sub);
+      border: 1px solid var(--primary-bdr); letter-spacing: 0.05em;
+      transition: all 0.25s ease;
+    }
+    .coupon-current-badge.flashing { animation: badge-flash 1.2s ease forwards; }
+
+    .input-override {
+      width: 140px; height: 38px; background: var(--bg-input);
+      border: 1px solid var(--border); border-radius: var(--r);
+      color: var(--text); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem; font-weight: 700; text-align: center;
+      outline: none; transition: border-color var(--ease), background var(--ease);
+      -moz-appearance: textfield;
+    }
+    .input-override::-webkit-outer-spin-button,
+    .input-override::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .input-override:focus { border-color: var(--primary); background: var(--bg-elevated); }
+
+    .controller-footer-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+    .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .data-table th {
+      padding: 10px 14px; text-align: left; font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-subtle);
+      background: var(--bg-elevated); border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border-muted);
+      vertical-align: middle; white-space: nowrap;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+    .tag-auto {
+      display: inline-block; padding: 2px 7px; border-radius: 4px;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      background: rgba(88,166,255,0.12); color: var(--text-blue);
+      border: 1px solid rgba(88,166,255,0.25);
+    }
+  </style>
+</head>
+<body>
+<div class="app" id="view-public">
+
+  <!-- ═══════════════════════
+       TOPBAR
+  ═══════════════════════ -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 18h18M5 18l-1-9 5 4 3-6 3 6 5-4-1 9"/>
+        <rect x="5" y="18" width="14" height="2" rx="1"/>
+      </svg>
+      <span class="brand-name">Golden Navratna Kuber</span>
+      <span class="brand-badge">Gold</span>
+    </div>
+
+    <div class="topbar-meta">
+      <div class="tmeta-block">
+        <span class="tmeta-label">Server Time</span>
+        <span class="tmeta-value" id="clock-top">--:--:-- --</span>
+      </div>
+      <div class="tmeta-div"></div>
+      <div class="tmeta-block">
+        <span class="tmeta-label">Draw Time</span>
+        <span class="tmeta-value primary" id="topbar-draw-time">--:-- --</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <a href="tel:0312-321091" class="btn-topbar-call" title="Call: 0312-321091">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.55 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="lbl">Contact</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════
+       STATUS STRIP
+  ═══════════════════════ -->
+  <div class="status-strip">
+    <div class="ss-left">
+      <div class="ss-item">
+        <svg class="ss-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="ss-body">
+          <span class="ss-label">Server Time</span>
+          <span class="ss-value" id="clock-strip">--:--:-- --</span>
+        </div>
+      </div>
+    </div>
+    <div class="ss-right">
+      <div class="ss-item">
+        <div class="ss-body" style="align-items:flex-end">
+          <span class="ss-label">Coupon Draw</span>
+          <span class="ss-value primary" id="strip-draw-time">--:-- --</span>
+        </div>
+      </div>
+      <div class="cd-pill">
+        <svg class="cd-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="cd-body">
+          <span class="cd-label">Time Left</span>
+          <span class="cd-value" id="countdown">--:--</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       TAB BAR
+  ═══════════════════════ -->
+  <nav class="tab-bar" role="tablist">
+    <button class="tab active" role="tab" aria-selected="true"  onclick="switchTab(this,'Bulk')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="11" width="20" height="5" rx="1"/><rect x="2" y="19" width="20" height="5" rx="1"/></svg>
+      Bulk Coupons
+    </button>
+    <button class="tab" role="tab" aria-selected="false" onclick="switchTab(this,'Pointwise')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      Pointwise Coupons
+    </button>
+    <button class="tab" role="tab" aria-selected="false" onclick="switchTab(this,'Loose')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Loose Coupons
+    </button>
+    <button class="tab" role="tab" aria-selected="false" onclick="switchTab(this,'LoosePointsWise')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      LoosePointsWise
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════
+       CONTENT
+  ═══════════════════════ -->
+  <div class="content">
+
+    <!-- Coupon Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title" id="panel-title">Bulk Coupons</span>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          <div class="draw-badge">
+            <div class="draw-dot"></div>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Last draw: <span id="last-draw-time">—</span>
+          </div>
+          <div class="draw-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Next in: <strong id="next-draw-in" style="color:var(--text-green);margin-left:2px;">--:--</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint label — mobile only -->
+      <div id="scroll-hint" style="display:none; padding:5px 12px 0; font-size:0.62rem; color:var(--text-subtle); display:flex; align-items:center; gap:4px;">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        Swipe table to see all ranges
+      </div>
+
+      <div class="table-wrap" id="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="th-name">Coupon</th>
+              <th class="th-win">Win</th>
+              <th class="th-range">00–90</th>
+              <th class="th-range">01–91</th>
+              <th class="th-range">02–92</th>
+              <th class="th-range">03–93</th>
+              <th class="th-range">04–94</th>
+              <th class="th-range">05–95</th>
+              <th class="th-range">06–96</th>
+              <th class="th-range">07–97</th>
+              <th class="th-range">08–98</th>
+              <th class="th-range">09–99</th>
+              <th class="th-stat">Qty</th>
+              <th class="th-stat">Pts</th>
+              <th class="th-draw" id="table-draw-th">Draw</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Contact & Booking Row (Replaces Login) -->
+      <div class="contact-row">
+        <div class="contact-left">
+          <span class="contact-badge">Direct Booking</span>
+          <span class="contact-desc">To place coupon bets or confirm tickets, call our direct phone line:</span>
+        </div>
+        <a href="tel:0312-321091" class="btn-call-main" title="Call: 0312-321091">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.55 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>Call 0312-321091</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop Action Row -->
+    <div class="action-row">
+      <button class="btn btn-green" onclick="handleBuy()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Buy
+      </button>
+      <button class="btn btn-ghost" onclick="handleClear()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+        Clear
+      </button>
+      <button class="btn btn-ghost" onclick="handleClearCoupon()">Clear Coupon</button>
+      <button class="btn btn-ghost" onclick="handleMoreCoupon()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        More Coupon
+      </button>
+      <div class="spacer"></div>
+      <button class="btn btn-danger-soft" onclick="handleCancel()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Cancel
+      </button>
+      <button class="btn btn-blue" onclick="handleReport()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Report
+      </button>
+    </div>
+
+  </div><!-- /.content -->
+
+  <!-- ═══════════════════════
+       FOOTER
+  ═══════════════════════ -->
+  <footer class="footer">
+    <div class="fi">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <a href="mailto:info@mail.com">info@mail.com</a>
+    </div>
+    <div class="fdiv"></div>
+    <div class="fi">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.55 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <a href="tel:0312-321091">0312-321091</a>
+    </div>
+    <div class="fdiv"></div>
+    <div class="fi">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <a href="https://www.goldennavratnakuber.com" target="_blank" rel="noopener">goldennavratnakuber.com</a>
+    </div>
+    <div class="fdiv"></div>
+    <div class="fi">Copyright &copy; 2024. All rights reserved.</div>
+    <div class="fdiv"></div>
+    <div class="fi">
+      <a href="#admin" onclick="showAdminView(event)" style="display:inline-flex;align-items:center;gap:4px;color:var(--text-subtle);font-weight:600;" title="Operations Admin Panel">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Admin
+      </a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FULL-SCREEN AUTHORITATIVE ADMIN DASHBOARD
+═══════════════════════════════════════════ -->
+<div class="app" id="view-admin" style="display:none;">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand-wrap">
+      <span class="brand-badge-admin">Admin</span>
+      <div>
+        <div class="brand-title">Golden Navratna Kuber</div>
+        <div class="brand-sub">Authoritative Operations & Control Dashboard</div>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span class="status-pill">Live Unified Engine</span>
+      </div>
+      <button type="button" class="btn-topbar primary" onclick="showPublicView(event)" title="Switch to Public Website">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        <span>View Public Site</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN BODY -->
+  <main class="admin-body">
+
+    <!-- 3-Stat Overview -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Next Scheduled Draw In</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="stat-value green" id="stat-countdown">--:--</div>
+        <div class="stat-desc">Target: <strong style="color:var(--text);" id="stat-target-time">--:-- --</strong></div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Draw Cycle Mode</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </div>
+        <div class="stat-value blue">15 Minutes</div>
+        <div class="stat-desc">Auto-draw every 15 minutes</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Today's Completed Draws</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="stat-value purple" id="stat-total-draws">0</div>
+        <div class="stat-desc">Rounds recorded in official log</div>
+      </div>
+    </section>
+
+    <!-- Main Draw Controller Card -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          15-Minute Next Draw Numbers
+        </div>
+        <span style="font-size:0.74rem;color:var(--text-subtle);">Controls live public lottery numbers</span>
+      </div>
+      <div class="card-body">
+        <div class="info-banner">
+          <strong style="color:var(--text);">How the 15-Minute Draw Works:</strong><br>
+          1. Enter the winning numbers (00–99) you want for the next 15-minute draw.<br>
+          2. Click <strong>Save for Next Draw</strong>.<br>
+          3. When the 15-minute timer hits 00:00, the draw automatically executes with your chosen numbers on the site.<br>
+          <em>Leave any coupon blank to let the system automatically randomize it.</em>
+        </div>
+
+        <div id="admin-queued-status" class="queued-status-box">
+          Loading queued draw state...
+        </div>
+
+        <table class="override-table">
+          <thead>
+            <tr>
+              <th>Coupon Game</th>
+              <th>Current Winning Number</th>
+              <th>Next Draw Number (00–99)</th>
+              <th>Quick Action</th>
+            </tr>
+          </thead>
+          <tbody id="override-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+
+        <div class="controller-footer-btns">
+          <button class="btn btn-green" onclick="handleSaveOverrides()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save for Next Draw
+          </button>
+          <button class="btn btn-ghost" onclick="handleClearOverrides()">
+            Clear (Auto Randomize All)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Draw History Log -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Recent 15-Minute Draws
+        </div>
+        <div style="font-size:0.72rem;color:var(--text-subtle);">Official Draw Records</div>
+      </div>
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Draw Time</th>
+              <th>Date</th>
+              <th>NAVRATNA</th>
+              <th>CHETAK</th>
+              <th>RAJA RANI</th>
+              <th>Execution Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══════════════════════
+     ADMIN DRAWER (15-Min Draw Control)
+═══════════════════════ -->
+<div class="admin-drawer-backdrop" id="admin-drawer-backdrop" onclick="closeAdminDrawer(event)">
+  <aside class="admin-drawer" onclick="event.stopPropagation()">
+    <div class="ad-header">
+      <div class="ad-title">
+        <span class="ad-badge">Admin</span>
+        <span>15-Minute Draw Control</span>
+      </div>
+      <button class="ad-close" onclick="closeAdminDrawer()" title="Close Drawer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="ad-body">
+      <!-- Card: Next 15-Minute Draw Cycle -->
+      <div class="ad-card">
+        <div class="ad-card-title">
+          <span>Next Scheduled Draw</span>
+          <span style="color:var(--text-green);font-size:0.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;" id="ad-drawer-countdown">--:--</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;color:var(--text-muted);margin-top:2px;">
+          <span>Target: <strong style="color:var(--text);" id="ad-drawer-target-time">--:-- --</strong></span>
+          <span style="font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(34,197,94,0.12);color:var(--text-green);border:1px solid rgba(34,197,94,0.25);">Every 15 Min</span>
+        </div>
+      </div>
+
+      <!-- Card: Set Next Draw Winning Numbers -->
+      <div class="ad-card">
+        <div class="ad-card-title">
+          <span>Set Next Draw Numbers</span>
+        </div>
+        <div style="font-size:0.72rem;color:var(--text-subtle);line-height:1.4;margin-bottom:8px;">
+          Choose winning numbers (00–99) for the next draw. If left blank, numbers will <strong>automatically randomize</strong> when the 15-min draw occurs.
+        </div>
+        <div id="ad-override-list">
+          <!-- Injected via JS -->
+        </div>
+
+        <div id="ad-queued-status" style="margin-top:8px;padding:8px 10px;background:var(--bg-base);border:1px solid var(--border-muted);border-radius:4px;font-size:0.7rem;color:var(--text-muted);">
+          <!-- Queued summary status -->
+        </div>
+
+        <div class="ad-btn-row" style="margin-top:10px;">
+          <button class="btn btn-green" onclick="handleDrawerSaveOverrides()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save for Next Draw
+          </button>
+          <button class="btn btn-ghost" style="height:38px;font-size:0.75rem;" onclick="handleDrawerClearOverrides()">
+            Clear (Auto Randomize All)
+          </button>
+        </div>
+      </div>
+
+      <!-- Card: Recent Draw Logs -->
+      <div class="ad-card">
+        <div class="ad-card-title">
+          <span>Recent Draws</span>
+        </div>
+        <div id="ad-recent-logs" style="font-size:0.72rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px;">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-footer-nav">
+      <span style="font-size:0.72rem;color:var(--text-subtle);">Direct System Sync</span>
+      <button type="button" onclick="showAdminView(event)" class="btn btn-ghost" style="height:32px;font-size:0.72rem;cursor:pointer;">
+        Open Fullscreen Admin ↗
+      </button>
+    </div>
+  </aside>
+</div>
+
+<!-- ═══════════════════════
+     REPORT MODAL (12hr & 24hr)
+═══════════════════════ -->
+<div class="report-modal-backdrop" id="report-modal-backdrop" onclick="closeReportModal(event)">
+  <div class="report-modal" onclick="event.stopPropagation()">
+    <div class="report-header">
+      <div class="report-title-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-blue);">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <span class="report-title">Draw Results Report</span>
+        <span class="report-badge">Official Record</span>
+      </div>
+      <button class="report-close" onclick="closeReportModal()" title="Close Report">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="report-filter-bar">
+      <div class="report-tabs">
+        <button class="report-tab-btn active" id="btn-report-12h" onclick="setReportTimeframe(12)">Past 12 Hours (48 Draws)</button>
+        <button class="report-tab-btn" id="btn-report-24h" onclick="setReportTimeframe(24)">Past 24 Hours (96 Draws)</button>
+      </div>
+      <span class="report-count-label" id="report-count-label">48 records shown</span>
+    </div>
+
+    <div class="report-body">
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Draw Time</th>
+            <th>NAVRATNA</th>
+            <th>CHETAK</th>
+            <th>RAJA RANI</th>
+            <th>Verification</th>
+          </tr>
+        </thead>
+        <tbody id="report-tbody">
+          <!-- Injected via JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-footer">
+      <span>15-Minute Cycle Draws • Synchronized Clock</span>
+      <button class="btn btn-ghost" style="height:32px;font-size:0.75rem;" onclick="closeReportModal()">Close Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     MOBILE BOTTOM BAR
+═══════════════════════ -->
+<div class="mobile-bar" id="mobile-bar">
+  <div class="mobile-bar-primary">
+    <button class="btn btn-green" onclick="handleBuy()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Buy
+    </button>
+    <button class="btn btn-blue" onclick="handleReport()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      Report
+    </button>
+  </div>
+  <div class="mobile-bar-secondary">
+    <button class="btn btn-ghost" onclick="handleClear()">Clear</button>
+    <button class="btn btn-ghost" onclick="handleClearCoupon()">Clear Coupon</button>
+    <button class="btn btn-ghost" onclick="handleMoreCoupon()">+ More</button>
+    <button class="btn btn-danger-soft" onclick="handleCancel()">Cancel</button>
+  </div>
+</div>
+
+<!-- Snackbar -->
+<div class="snack-host" id="snack-host"></div>
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════════
+   UNIFIED SYNCHRONIZATION ENGINE (GnkSync)
+   Guarantees 100% identical time, identical draw
+   numbers, and instant cross-tab communication.
+════════════════════════════════════════════ */
+const STORAGE_KEY = 'gnk_master_state_v2';
+const BC_NAME     = 'gnk_lottery_channel_v2';
+
+const COUPON_NAMES = ['NAVRATNA', 'CHETAK', 'RAJA RANI'];
+
+// Master default state with actual winning numbers
+const DEFAULT_STATE = {
+  version: 2,
+  updatedAt: Date.now(),
+  numbers: {
+    'NAVRATNA': 32,
+    'CHETAK': 37,
+    'RAJA RANI': 30
+  },
+  lastDrawTime: '03:30 PM',
+  lastDrawDate: '10/01/2026',
+  lastDrawSlot: '',
+  overrides: {},
+  history: [
+    {
+      id: 'D-800957',
+      time: '03:30 PM',
+      date: '10/01/2026',
+      timestamp: Date.now() - 60000,
+      results: { 'NAVRATNA': 32, 'CHETAK': 37, 'RAJA RANI': 30 },
+      type: 'auto'
+    }
+  ]
+};
+
+var masterState = null;
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.numbers) return parsed;
+    }
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
+
+masterState = loadState();
+if (!localStorage.getItem(STORAGE_KEY)) {
+  saveState(masterState);
+}
+
+function saveState(st) {
+  st.updatedAt = Date.now();
+  masterState = st;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(st));
+    // Backward compatibility keys
+    localStorage.setItem('gnk_latest_draw', JSON.stringify({
+      numbers: st.numbers,
+      timeStr: st.lastDrawTime,
+      timestamp: st.updatedAt,
+      type: st.history && st.history[0] ? st.history[0].type : 'auto'
+    }));
+    localStorage.setItem('gnk_override', JSON.stringify(st.overrides || {}));
+    localStorage.setItem('gnk_history', JSON.stringify(st.history || []));
+  } catch (e) {}
+
+  // Broadcast to all open tabs
+  try {
+    if (window._bc) {
+      window._bc.postMessage({ type: 'STATE_SYNC', state: st });
+    }
+  } catch (e) {}
+
+  // Broadcast to opener/parent if open
+  try {
+    if (window.opener && !window.opener.closed) {
+      window.opener.postMessage({ type: 'STATE_SYNC', state: st }, '*');
+    }
+  } catch (e) {}
+
+  // Optional background server sync
+  try {
+    fetch('http://localhost:8000/api/override', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ overrides: st.overrides || {} })
+    }).catch(() => {});
+  } catch (e) {}
+}
+
+// Setup BroadcastChannel
+try {
+  if (window.BroadcastChannel) {
+    window._bc = new BroadcastChannel(BC_NAME);
+    window._bc.onmessage = (e) => {
+      if (e.data && e.data.type === 'STATE_SYNC' && e.data.state) {
+        onExternalStateReceived(e.data.state);
+      }
+    };
+  }
+} catch (e) {}
+
+// Setup window storage listener
+window.addEventListener('storage', (e) => {
+  if (e.key === STORAGE_KEY && e.newValue) {
+    try {
+      const st = JSON.parse(e.newValue);
+      onExternalStateReceived(st);
+    } catch (err) {}
+  }
+});
+
+// Setup postMessage listener
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'STATE_SYNC' && e.data.state) {
+    onExternalStateReceived(e.data.state);
+  }
+});
+
+function onExternalStateReceived(newState) {
+  if (!newState || !newState.numbers) return;
+  if (!masterState || newState.updatedAt >= masterState.updatedAt) {
+    const prevNumbers = masterState ? JSON.stringify(masterState.numbers) : '';
+    masterState = newState;
+
+    // Apply numbers to COUPONS array
+    COUPONS.forEach((c, ci) => {
+      if (newState.numbers[c.name] !== undefined) {
+        c.latest = newState.numbers[c.name];
+        const cell = document.getElementById(`drw-${ci}`);
+        if (cell) {
+          cell.textContent = String(c.latest).padStart(2, '0');
+          cell.classList.remove('flashing');
+          void cell.offsetWidth;
+          cell.classList.add('flashing');
+        }
+      }
+    });
+
+    // Update last draw labels
+    const lastEl = document.getElementById('last-draw-time');
+    if (lastEl) lastEl.textContent = newState.lastDrawTime;
+    const thEl = document.getElementById('table-draw-th');
+    if (thEl) thEl.textContent = newState.lastDrawTime;
+
+    // If numbers changed, show floating banner and drawer update
+    if (JSON.stringify(newState.numbers) !== prevNumbers) {
+      showDrawBanner(newState.lastDrawTime);
+      snack(`Draw result at ${newState.lastDrawTime} — numbers updated!`, 'success', 4000);
+    }
+
+    renderDrawerOverrides();
+    renderDrawerLogs();
+    updateDrawerQueuedStatus();
+  }
+}
+
+/* ── Coupon & Settings Models ── */
+let settings = { phone: '0312-321091', interval: 15, mode: 'auto' };
+
+let COUPONS = [
+  { name: 'NAVRATNA',  win: 100, latest: (masterState && masterState.numbers && masterState.numbers['NAVRATNA'] !== undefined) ? masterState.numbers['NAVRATNA'] : 32, enabled: true },
+  { name: 'CHETAK',    win: 100, latest: (masterState && masterState.numbers && masterState.numbers['CHETAK'] !== undefined) ? masterState.numbers['CHETAK'] : 37, enabled: true },
+  { name: 'RAJA RANI', win: 100, latest: (masterState && masterState.numbers && masterState.numbers['RAJA RANI'] !== undefined) ? masterState.numbers['RAJA RANI'] : 30, enabled: true },
+];
+
+const RANGES = [
+  '00–90','01–91','02–92','03–93',
+  '04–94','05–95','06–96','07–97',
+  '08–98','09–99',
+];
+
+function applySiteSettings() {
+  const phone = settings.phone || '0312-321091';
+  document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+    a.href = `tel:${phone.replace(/\s+/g, '')}`;
+    if (a.classList.contains('btn-call-main')) {
+      const sp = a.querySelector('span');
+      if (sp) sp.textContent = `Call: ${phone}`;
+    } else if (a.closest('.fi')) {
+      a.textContent = phone;
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   CYCLE TIME ENGINE (Every 500ms)
+   Uses strict 15-minute clock formula for 100%
+   identical countdown and target across both pages!
+═══════════════════════════════════════════════ */
+function getCycleTimeInfo() {
+  const now = new Date();
+  const mins = now.getMinutes();
+  const secs = now.getSeconds();
+
+  const minsInCycle = mins % 15;
+  const secsInCycle = minsInCycle * 60 + secs;
+  // Seconds remaining until the next 15-minute boundary
+  // At exact boundary (00:00:00), secsInCycle is 0, so 0 seconds remaining
+  const remSecs = (secsInCycle === 0) ? 0 : (900 - secsInCycle);
+
+  const m = Math.floor(remSecs / 60);
+  const s = remSecs % 60;
+  const pad = n => String(n).padStart(2, '0');
+  const cdStr = `${pad(m)}:${pad(s)}`;
+
+  // Target draw time: the upcoming boundary
+  let targetDate;
+  if (secsInCycle === 0) {
+    targetDate = new Date(now);
+    targetDate.setSeconds(0, 0);
+  } else {
+    targetDate = new Date(now.getTime() + remSecs * 1000);
+    targetDate.setSeconds(0, 0);
+  }
+  const targetStr = targetDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+  // Current slot info (the 15-min draw slot happening or just happened)
+  const slotMinute = Math.floor(mins / 15) * 15;
+  const slotDate = new Date(now);
+  slotDate.setMinutes(slotMinute, 0, 0);
+  const slotKey = `${slotDate.getFullYear()}-${slotDate.getMonth()+1}-${slotDate.getDate()} ${slotDate.getHours()}:${slotMinute}`;
+  const slotDrawStr = slotDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+  return { now, remSecs, cdStr, targetStr, slotDrawStr, slotKey };
+}
+
+function initDrawLabels() {
+  const info = getCycleTimeInfo();
+  const lastEl = document.getElementById('last-draw-time');
+  if (lastEl) lastEl.textContent = masterState.lastDrawTime || info.slotDrawStr;
+  const thEl = document.getElementById('table-draw-th');
+  if (thEl) thEl.textContent = masterState.lastDrawTime || info.slotDrawStr;
+  const topEl = document.getElementById('topbar-draw-time');
+  if (topEl) topEl.textContent = info.targetStr;
+  const stripEl = document.getElementById('strip-draw-time');
+  if (stripEl) stripEl.textContent = info.targetStr;
+  applySiteSettings();
+}
+
+/** Called every 500ms — updates clocks, labels, and executes auto draw */
+function checkDraw() {
+  const info = getCycleTimeInfo();
+
+  // Update target time labels
+  const topEl = document.getElementById('topbar-draw-time');
+  if (topEl && topEl.textContent !== info.targetStr) topEl.textContent = info.targetStr;
+  const stripEl = document.getElementById('strip-draw-time');
+  if (stripEl && stripEl.textContent !== info.targetStr) stripEl.textContent = info.targetStr;
+  const adTarget = document.getElementById('ad-drawer-target-time');
+  if (adTarget && adTarget.textContent !== info.targetStr) adTarget.textContent = info.targetStr;
+
+  // Update countdown labels
+  const niEl = document.getElementById('next-draw-in');
+  if (niEl) niEl.textContent = info.cdStr;
+  const cdEl = document.getElementById('countdown');
+  if (cdEl) cdEl.textContent = info.cdStr;
+  const adCd = document.getElementById('ad-drawer-countdown');
+  if (adCd) adCd.textContent = info.cdStr;
+  const statCd = document.getElementById('stat-countdown');
+  if (statCd && statCd.textContent !== info.cdStr) statCd.textContent = info.cdStr;
+  const statTarget = document.getElementById('stat-target-time');
+  if (statTarget && statTarget.textContent !== info.targetStr) statTarget.textContent = info.targetStr;
+  const statTotal = document.getElementById('stat-total-draws');
+  if (statTotal) statTotal.textContent = (masterState && masterState.history) ? masterState.history.length : 0;
+
+  // Keep last draw label in sync
+  const lastEl = document.getElementById('last-draw-time');
+  if (lastEl && lastEl.textContent !== masterState.lastDrawTime) lastEl.textContent = masterState.lastDrawTime;
+  const thEl = document.getElementById('table-draw-th');
+  if (thEl && thEl.textContent !== masterState.lastDrawTime) thEl.textContent = masterState.lastDrawTime;
+
+  // Active poller: check if localStorage has newer state from admin.html
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.updatedAt && (!masterState || parsed.updatedAt > masterState.updatedAt)) {
+        onExternalStateReceived(parsed);
+      }
+    }
+  } catch (e) {}
+
+  // Auto 15-minute draw execution (when countdown reaches 00:00 at boundary)
+  if (info.remSecs === 0 || (info.now.getSeconds() === 0 && info.now.getMinutes() % 15 === 0)) {
+    if (masterState && masterState.lastDrawSlot !== info.slotKey) {
+      execute15MinDraw(info.slotDrawStr, info.slotKey);
+    }
+  }
+}
+
+function getSlotAutoNumber(couponName, slotKey) {
+  const str = couponName + ':' + slotKey;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % 100;
+}
+
+/** 15-Minute Automatic Draw Execution */
+function execute15MinDraw(timeStr, slotKey) {
+  const now = new Date();
+  if (!timeStr) {
+    timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  }
+  const dateStr = now.toLocaleDateString('en-US');
+  const results = {};
+  const overrides = masterState.overrides || {};
+
+  COUPON_NAMES.forEach((name, ci) => {
+    let num;
+    if (overrides[name] !== undefined && overrides[name] !== null && String(overrides[name]).trim() !== '') {
+      num = parseInt(overrides[name], 10);
+      if (isNaN(num) || num < 0 || num > 99) num = getSlotAutoNumber(name, slotKey);
+    } else {
+      num = getSlotAutoNumber(name, slotKey);
+    }
+    results[name] = num;
+
+    // Update coupon in memory & table cell
+    if (COUPONS[ci]) {
+      COUPONS[ci].latest = num;
+      const cell = document.getElementById(`drw-${ci}`);
+      if (cell) {
+        cell.textContent = String(num).padStart(2, '0');
+        cell.classList.remove('flashing');
+        void cell.offsetWidth;
+        cell.classList.add('flashing');
+      }
+    }
+
+    // Update admin dashboard badges
+    const badge = document.getElementById(`badge-${name}`);
+    if (badge) {
+      badge.textContent = String(num).padStart(2, '0');
+      badge.classList.remove('flashing');
+      void badge.offsetWidth;
+      badge.classList.add('flashing');
+    }
+  });
+
+  const drawEntry = {
+    id: `D-${String(Date.now()).slice(-6)}`,
+    time: timeStr,
+    date: dateStr,
+    timestamp: Date.now(),
+    results: results,
+    type: 'auto'
+  };
+
+  const oldHistory = (masterState && masterState.history) ? masterState.history : [];
+  const newHistory = [drawEntry, ...oldHistory].slice(0, 50);
+
+  const newState = {
+    version: 2,
+    updatedAt: Date.now(),
+    numbers: results,
+    lastDrawTime: timeStr,
+    lastDrawDate: dateStr,
+    lastDrawSlot: slotKey || `auto-${Date.now()}`,
+    overrides: {}, // consumed and cleared!
+    history: newHistory
+  };
+
+  saveState(newState);
+
+  // Update labels
+  const lastEl = document.getElementById('last-draw-time');
+  if (lastEl) lastEl.textContent = timeStr;
+  const thEl = document.getElementById('table-draw-th');
+  if (thEl) thEl.textContent = timeStr;
+
+  renderDrawerOverrides();
+  renderDrawerLogs();
+  updateDrawerQueuedStatus();
+
+  renderOverrideTable();
+  renderHistoryTable();
+  updateQueuedStatus();
+  flashBadges();
+
+  showDrawBanner(timeStr);
+  snack(`Draw completed at ${timeStr} — new numbers updated!`, 'success', 4000);
+}
+
+// ── Background Server Synchronization (Every 1s) ──
+function syncWithServer() {
+  fetch('http://localhost:8000/api/status', { cache: 'no-store' })
+    .then(r => {
+      if (!r.ok) throw new Error('Status ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      if (!data || !data.ok) return;
+
+      const serverNumbers = {};
+      if (data.coupons && Array.isArray(data.coupons)) {
+        data.coupons.forEach(c => { serverNumbers[c.name] = c.latest; });
+      } else if (data.latestDraw && data.latestDraw.results) {
+        Object.assign(serverNumbers, data.latestDraw.results);
+      }
+
+      const serverTime = (data.latestDraw && data.latestDraw.time) ? data.latestDraw.time : data.serverTime;
+      const prevNumbers = masterState ? JSON.stringify(masterState.numbers) : '';
+
+      // Apply server numbers to table
+      let updated = false;
+      COUPONS.forEach((c, ci) => {
+        if (serverNumbers[c.name] !== undefined) {
+          if (c.latest !== serverNumbers[c.name]) {
+            c.latest = serverNumbers[c.name];
+            updated = true;
+            const cell = document.getElementById(`drw-${ci}`);
+            if (cell) {
+              cell.textContent = String(c.latest).padStart(2, '0');
+              cell.classList.remove('flashing');
+              void cell.offsetWidth;
+              cell.classList.add('flashing');
+            }
+          }
+        }
+      });
+
+      if (masterState) {
+        masterState.numbers = serverNumbers;
+        if (serverTime) {
+          masterState.lastDrawTime = serverTime;
+          const lastEl = document.getElementById('last-draw-time');
+          if (lastEl) lastEl.textContent = serverTime;
+          const thEl = document.getElementById('table-draw-th');
+          if (thEl) thEl.textContent = serverTime;
+        }
+        if (data.overrides) {
+          masterState.overrides = data.overrides;
+          updateDrawerQueuedStatus();
+        }
+        if (data.history && Array.isArray(data.history) && data.history.length > 0) {
+          masterState.history = data.history;
+          renderDrawerLogs();
+        }
+      }
+
+      if (updated && serverTime && prevNumbers && JSON.stringify(serverNumbers) !== prevNumbers) {
+        showDrawBanner(serverTime);
+      }
+    })
+    .catch(() => {
+      // Local engine handles synchronization
+    });
+}
+setInterval(syncWithServer, 1000);
+
+function showDrawBanner(timeStr) {
+  const existing = document.getElementById('draw-banner');
+  if (existing) existing.remove();
+
+  const banner = document.createElement('div');
+  banner.className = 'draw-banner';
+  banner.id = 'draw-banner';
+  banner.innerHTML = `
+    <svg class="draw-banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+    Draw result at ${timeStr} — winning numbers updated!
+  `;
+  document.body.appendChild(banner);
+
+  setTimeout(() => {
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateX(-50%) translateY(-8px)';
+    banner.style.transition = 'opacity 0.3s, transform 0.3s';
+    setTimeout(() => banner.remove(), 320);
+  }, 4500);
+}
+
+/* ════════════════════════════════════════════
+   ADMIN DRAWER (15-Min Draw Controller)
+════════════════════════════════════════════ */
+function openAdminDrawer(e) {
+  if (e) e.preventDefault();
+  const bd = document.getElementById('admin-drawer-backdrop');
+  if (bd) bd.classList.add('open');
+
+  const info = getCycleTimeInfo();
+  const adCd = document.getElementById('ad-drawer-countdown');
+  if (adCd) adCd.textContent = info.cdStr;
+  const adTarget = document.getElementById('ad-drawer-target-time');
+  if (adTarget) adTarget.textContent = info.targetStr;
+
+  renderDrawerOverrides();
+  renderDrawerLogs();
+  updateDrawerQueuedStatus();
+}
+
+function closeAdminDrawer(e) {
+  if (e && e.target && e.target.id !== 'admin-drawer-backdrop' && !e.target.closest('.ad-close')) {
+    return;
+  }
+  const bd = document.getElementById('admin-drawer-backdrop');
+  if (bd) bd.classList.remove('open');
+}
+
+function renderDrawerOverrides() {
+  const list = document.getElementById('ad-override-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  const curOverrides = masterState.overrides || {};
+  const numbers = masterState.numbers || {};
+
+  COUPONS.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'ad-override-row';
+    const curNum = numbers[c.name] !== undefined ? String(numbers[c.name]).padStart(2, '0') : '00';
+    const val = (curOverrides[c.name] !== undefined && curOverrides[c.name] !== null) ? curOverrides[c.name] : '';
+
+    row.innerHTML = `
+      <div class="ad-coupon-info">
+        <span class="ad-coupon-name">${c.name}</span>
+        <span class="ad-coupon-cur">Current: <strong>${curNum}</strong></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <input type="number" min="0" max="99" class="ad-input-num ad-inp-ov"
+          data-coupon="${c.name}" placeholder="Auto (Random)" value="${val}"
+          oninput="updateDrawerQueuedStatus()" />
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function updateDrawerQueuedStatus() {
+  const statBox = document.getElementById('ad-queued-status');
+  if (!statBox) return;
+
+  const curOverrides = {};
+  let anyInput = false;
+  document.querySelectorAll('.ad-inp-ov').forEach(i => {
+    const name = i.dataset.coupon;
+    const v = i.value.trim();
+    if (v !== '') {
+      const num = parseInt(v, 10);
+      if (!isNaN(num) && num >= 0 && num <= 99) {
+        curOverrides[name] = num;
+        anyInput = true;
+      }
+    }
+  });
+
+  const stored = masterState.overrides || {};
+  const storedKeys = Object.keys(stored).filter(k => stored[k] !== '' && stored[k] !== undefined && stored[k] !== null);
+
+  if (anyInput) {
+    statBox.innerHTML = `<span style="color:var(--text-green);font-weight:700;">Ready to Save for Next Draw:</span> ` +
+      Object.keys(curOverrides).map(k => `<strong>${k}: ${String(curOverrides[k]).padStart(2,'0')}</strong>`).join(' • ') +
+      ` <span style="color:var(--text-subtle);">(unspecified will randomize)</span>`;
+  } else if (storedKeys.length > 0) {
+    statBox.innerHTML = `<span style="color:var(--text-green);font-weight:700;">Set for Next Draw:</span> ` +
+      storedKeys.map(k => `<strong>${k}: ${String(stored[k]).padStart(2,'0')}</strong>`).join(' • ') +
+      ` <span style="color:var(--text-subtle);">(others will randomize)</span>`;
+  } else {
+    statBox.innerHTML = `<span style="color:var(--text-blue);">Next 15-Min Draw: <strong>All Auto Random (00–99)</strong></span>`;
+  }
+}
+
+function handleDrawerClearOverrides() {
+  document.querySelectorAll('.ad-inp-ov').forEach(i => i.value = '');
+  const st = Object.assign({}, masterState, {
+    overrides: {},
+    updatedAt: Date.now()
+  });
+  saveState(st);
+  updateDrawerQueuedStatus();
+
+  fetch('http://localhost:8000/api/clear', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }).catch(() => {});
+
+  snack('Cleared! Next 15-min draw will automatically randomize all numbers.', 'info');
+}
+
+function handleDrawerSaveOverrides() {
+  const newOverrides = {};
+  let count = 0;
+  document.querySelectorAll('.ad-inp-ov').forEach(i => {
+    const name = i.dataset.coupon;
+    const v    = i.value.trim();
+    if (v !== '') {
+      const num = parseInt(v, 10);
+      if (!isNaN(num) && num >= 0 && num <= 99) {
+        newOverrides[name] = num;
+        count++;
+      }
+    }
+  });
+
+  const st = Object.assign({}, masterState, {
+    overrides: newOverrides,
+    updatedAt: Date.now()
+  });
+
+  saveState(st);
+  updateDrawerQueuedStatus();
+
+  fetch('http://localhost:8000/api/override', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ overrides: newOverrides })
+  }).catch(() => {});
+
+  if (count > 0) {
+    snack(`Saved ${count} number(s) for next 15-min draw! Other coupons will randomize.`, 'success');
+  } else {
+    snack('No numbers entered — next 15-min draw will randomize all numbers.', 'info');
+  }
+}
+
+
+function renderDrawerLogs() {
+  const cont = document.getElementById('ad-recent-logs');
+  if (!cont) return;
+  const history = masterState.history || [];
+  if (history.length === 0) {
+    cont.innerHTML = `<span style="color:var(--text-subtle);">No draws recorded yet.</span>`;
+    return;
+  }
+  cont.innerHTML = history.slice(0, 5).map(h => {
+    const n = (h.results && h.results['NAVRATNA'] !== undefined) ? String(h.results['NAVRATNA']).padStart(2,'0') : '—';
+    const c = (h.results && h.results['CHETAK']   !== undefined) ? String(h.results['CHETAK']).padStart(2,'0') : '—';
+    const r = (h.results && h.results['RAJA RANI'] !== undefined) ? String(h.results['RAJA RANI']).padStart(2,'0') : '—';
+    return `
+      <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-muted);">
+        <span>${h.time}</span>
+        <span style="font-family:'JetBrains Mono',monospace;color:var(--text-green);font-weight:700;">N:${n} C:${c} R:${r}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════
+   REPORT CONTROLLER (12hr & 24hr Draws)
+════════════════════════════════════════════ */
+let _currentReportHours = 12;
+
+function handleReport() {
+  openReportModal();
+}
+
+function openReportModal() {
+  const bd = document.getElementById('report-modal-backdrop');
+  if (bd) bd.classList.add('open');
+  renderReportData(_currentReportHours);
+}
+
+function closeReportModal(e) {
+  if (e && e.target && e.target.id !== 'report-modal-backdrop' && !e.target.closest('.report-close') && e.target.tagName !== 'BUTTON') {
+    return;
+  }
+  const bd = document.getElementById('report-modal-backdrop');
+  if (bd) bd.classList.remove('open');
+}
+
+function setReportTimeframe(hours) {
+  _currentReportHours = hours;
+  const b12 = document.getElementById('btn-report-12h');
+  const b24 = document.getElementById('btn-report-24h');
+  if (b12) b12.classList.toggle('active', hours === 12);
+  if (b24) b24.classList.toggle('active', hours === 24);
+  renderReportData(hours);
+}
+
+function renderReportData(hours) {
+  const tbody = document.getElementById('report-tbody');
+  const countLabel = document.getElementById('report-count-label');
+  if (!tbody) return;
+
+  const totalSlots = hours * 4; // 15-minute cycles = 4 per hour
+  if (countLabel) countLabel.textContent = `${totalSlots} draws shown (${hours} hours)`;
+
+  const history = masterState.history || [];
+  const now = new Date();
+  const currentSlotMinute = Math.floor(now.getMinutes() / 15) * 15;
+  const slotDateBase = new Date(now);
+  slotDateBase.setMinutes(currentSlotMinute, 0, 0);
+  const currentSlotTime = slotDateBase.getTime();
+  const fifteenMinMs = 15 * 60 * 1000;
+
+  function getDeterministicNumbers(slotMs) {
+    const slotIdx = Math.floor(slotMs / fifteenMinMs);
+    const n = Math.abs((slotIdx * 7919 + 1013904223) % 100);
+    const c = Math.abs((slotIdx * 6271 + 314159265) % 100);
+    const r = Math.abs((slotIdx * 9319 + 271828183) % 100);
+    return { 'NAVRATNA': n, 'CHETAK': c, 'RAJA RANI': r };
+  }
+
+  const rows = [];
+  for (let i = 0; i < totalSlots; i++) {
+    const slotMs = currentSlotTime - (i * fifteenMinMs);
+    const slotDate = new Date(slotMs);
+
+    let match = null;
+    if (i === 0 && masterState.numbers) {
+      match = {
+        results: masterState.numbers,
+        id: `LIVE-${String(masterState.updatedAt || slotMs).slice(-6)}`
+      };
+    } else {
+      match = history.find(h => {
+        return Math.abs(new Date(`${h.date} ${h.time}`).getTime() - slotMs) < 7 * 60 * 1000;
+      });
+    }
+
+    const results = (match && match.results) ? match.results : getDeterministicNumbers(slotMs);
+    const nVal = results['NAVRATNA'] !== undefined ? String(results['NAVRATNA']).padStart(2, '0') : '00';
+    const cVal = results['CHETAK']   !== undefined ? String(results['CHETAK']).padStart(2, '0') : '00';
+    const rVal = results['RAJA RANI'] !== undefined ? String(results['RAJA RANI']).padStart(2, '0') : '00';
+
+    const isToday = slotDate.toDateString() === now.toDateString();
+    const dayPrefix = isToday ? 'Today' : 'Yesterday';
+    const timeFormatted = slotDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    const slotId = (match && match.id) ? match.id : (`#D-${String(Math.abs(Math.floor(slotMs / 10000))).slice(-6)}`);
+
+    rows.push(`
+      <tr>
+        <td style="font-weight:600;color:var(--text);white-space:nowrap;">
+          <span style="font-size:0.68rem;color:var(--text-subtle);display:block;">${dayPrefix}</span>
+          ${timeFormatted}
+        </td>
+        <td><span class="report-num-pill">${nVal}</span></td>
+        <td><span class="report-num-pill">${cVal}</span></td>
+        <td><span class="report-num-pill">${rVal}</span></td>
+        <td style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;">
+          <span style="color:var(--text-green);margin-right:4px;">●</span>${slotId}
+        </td>
+      </tr>
+    `);
+  }
+
+  tbody.innerHTML = rows.join('');
+}
+
+/* ════════════════════════════════════════════
+   TABLE RENDER
+════════════════════════════════════════════ */
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  COUPONS.forEach((c, ci) => {
+    const tr = document.createElement('tr');
+
+    tr.appendChild(makeTd('td-name', c.name));
+    tr.appendChild(makeTd('td-win',  c.win));
+
+    RANGES.forEach(r => {
+      const cell = document.createElement('td');
+      const inp  = document.createElement('input');
+      inp.type        = 'number';
+      inp.className   = 'num-input';
+      inp.inputMode   = 'numeric';
+      inp.min         = 0;
+      inp.placeholder = '—';
+      inp.setAttribute('aria-label', `${c.name} ${r}`);
+      inp.dataset.ci  = ci;
+      inp.addEventListener('input', () => recalc(ci));
+      cell.appendChild(inp);
+      tr.appendChild(cell);
+    });
+
+    const qtyTd = makeTd('td-stat', '0'); qtyTd.id = `qty-${ci}`; tr.appendChild(qtyTd);
+    const ptsTd = makeTd('td-stat', '0'); ptsTd.id = `pts-${ci}`; tr.appendChild(ptsTd);
+
+    const drwNum = String(c.latest).padStart(2,'0');
+    const drwTd  = makeTd('td-draw', drwNum); drwTd.id = `drw-${ci}`; tr.appendChild(drwTd);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function makeTd(cls, text) {
+  const el = document.createElement('td');
+  el.className   = cls;
+  el.textContent = text;
+  return el;
+}
+
+function recalc(ci) {
+  const inputs = document.querySelectorAll(`input[data-ci="${ci}"]`);
+  let qty = 0, pts = 0;
+  inputs.forEach(i => { const v = parseInt(i.value, 10) || 0; if (v > 0) { qty++; pts += v; } });
+  document.getElementById(`qty-${ci}`).textContent = qty;
+  document.getElementById(`pts-${ci}`).textContent = pts;
+}
+
+/* ════════════════════════════════════════════
+   CLOCK
+════════════════════════════════════════════ */
+function tick() {
+  const now = new Date();
+  const t = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: true });
+  const d = now.toLocaleDateString('en-US', { month:'numeric', day:'numeric', year:'numeric' });
+  const g = id => document.getElementById(id);
+  if (g('clock-top'))   g('clock-top').textContent   = t;
+  if (g('clock-strip')) g('clock-strip').textContent  = `${d}, ${t}`;
+
+  checkDraw();
+}
+
+setInterval(tick, 500);
+tick();
+
+/* ════════════════════════════════════════════
+   TAB SWITCH
+════════════════════════════════════════════ */
+function switchTab(btn, name) {
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  const el = document.getElementById('panel-title');
+  if (el) el.textContent = `${name} Coupons`;
+}
+
+/* ════════════════════════════════════════════
+   SCROLL HINT
+════════════════════════════════════════════ */
+function checkScrollHint() {
+  const wrap = document.getElementById('table-wrap');
+  const hint = document.getElementById('scroll-hint');
+  if (!wrap || !hint) return;
+  const isMobile = window.innerWidth <= 680;
+  hint.style.display = (isMobile && wrap.scrollWidth > wrap.clientWidth) ? 'flex' : 'none';
+  wrap.addEventListener('scroll', () => { hint.style.display = 'none'; }, { once: true });
+}
+window.addEventListener('resize', checkScrollHint);
+window.addEventListener('load',   checkScrollHint);
+
+/* ════════════════════════════════════════════
+   SNACKBAR
+════════════════════════════════════════════ */
+const ICO = {
+  success: `<svg class="snack-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  error:   `<svg class="snack-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+  info:    `<svg class="snack-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+};
+
+function snack(msg, type = 'info', ms = 3200) {
+  const host = document.getElementById('snack-host');
+  const el   = document.createElement('div');
+  el.className = `snack ${type}`;
+  el.innerHTML = `${ICO[type]}<span>${msg}</span>`;
+  host.appendChild(el);
+  setTimeout(() => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(6px)';
+    setTimeout(() => el.remove(), 260);
+  }, ms);
+}
+
+/* ════════════════════════════════════════════
+   HANDLERS
+════════════════════════════════════════════ */
+function handleBuy() {
+  let totalQty = 0, totalPts = 0;
+  COUPONS.forEach((_, ci) => {
+    const inputs = document.querySelectorAll(`input[data-ci="${ci}"]`);
+    inputs.forEach(i => {
+      const v = parseInt(i.value, 10) || 0;
+      if (v > 0) { totalQty++; totalPts += v; }
+    });
+  });
+
+  const phone = settings.phone || '0312-321091';
+
+  if (totalQty === 0) {
+    snack(`Enter points in table first, or call ${phone} to book directly.`, 'info');
+    setTimeout(() => { window.location.href = `tel:${phone.replace(/\s+/g, '')}`; }, 1200);
+    return;
+  }
+
+  snack(`Booking ${totalQty} coupon(s) [${totalPts} pts]. Opening phone caller to ${phone}...`, 'success', 3500);
+  setTimeout(() => {
+    window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
+  }, 1000);
+}
+
+function handleClear() {
+  document.querySelectorAll('.num-input').forEach(i => { i.value = ''; });
+  COUPONS.forEach((_, ci) => recalc(ci));
+  snack('All entries cleared.', 'info');
+}
+
+function handleClearCoupon() { snack('Coupon cleared.', 'info'); }
+function handleMoreCoupon()  { snack('Loading additional coupons…', 'info'); }
+function handleCancel()      { handleClear(); snack('Operation cancelled.', 'error'); }
+
+/* ════════════════════════════════════════════
+   VIEW SWITCHER (Public Site <-> Admin Panel)
+════════════════════════════════════════════ */
+function showAdminView(e) {
+  if (e) e.preventDefault();
+  const pub = document.getElementById('view-public');
+  const adm = document.getElementById('view-admin');
+  if (pub) pub.style.display = 'none';
+  if (adm) adm.style.display = 'block';
+  window.location.hash = 'admin';
+  closeAdminDrawer();
+  renderOverrideTable();
+  renderHistoryTable();
+  updateQueuedStatus();
+  window.scrollTo(0, 0);
+}
+
+function showPublicView(e) {
+  if (e) e.preventDefault();
+  const pub = document.getElementById('view-public');
+  const adm = document.getElementById('view-admin');
+  if (adm) adm.style.display = 'none';
+  if (pub) pub.style.display = 'block';
+  window.location.hash = '';
+  window.scrollTo(0, 0);
+}
+
+function checkViewHash() {
+  if (window.location.hash === '#admin') {
+    showAdminView();
+  } else {
+    showPublicView();
+  }
+}
+window.addEventListener('hashchange', checkViewHash);
+
+/* ════════════════════════════════════════════
+   FULL ADMIN VIEW FUNCTIONS
+════════════════════════════════════════════ */
+function renderOverrideTable() {
+  const tbody = document.getElementById('override-tbody');
+  if (!tbody) return;
+
+  const userTyped = {};
+  document.querySelectorAll('.input-override').forEach(i => {
+    if (i.value.trim() !== '') userTyped[i.dataset.coupon] = i.value;
+  });
+
+  tbody.innerHTML = '';
+  const overrides = (masterState && masterState.overrides) ? masterState.overrides : {};
+  const numbers = (masterState && masterState.numbers) ? masterState.numbers : {};
+
+  COUPON_NAMES.forEach(name => {
+    const curNum = numbers[name] !== undefined ? String(numbers[name]).padStart(2, '0') : '00';
+    const inputVal = userTyped[name] !== undefined 
+      ? userTyped[name] 
+      : ((overrides[name] !== undefined && overrides[name] !== null) ? overrides[name] : '');
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><div class="coupon-title-cell">${name}</div></td>
+      <td><span class="coupon-current-badge" id="badge-${name}">${curNum}</span></td>
+      <td>
+        <input type="number" min="0" max="99" class="input-override"
+          placeholder="Auto (Random)" value="${inputVal}"
+          data-coupon="${name}" oninput="updateQueuedStatus()" />
+      </td>
+      <td>
+        <button type="button" class="btn btn-ghost" style="height:32px;font-size:0.75rem;display:inline-flex;align-items:center;gap:4px;" onclick="randomizeCoupon('${name}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Roll
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function randomizeCoupon(name) {
+  const inp = document.querySelector(`.input-override[data-coupon="${name}"]`);
+  if (inp) {
+    inp.value = Math.floor(Math.random() * 100);
+    updateQueuedStatus();
+  }
+}
+
+function flashBadges() {
+  document.querySelectorAll('.coupon-current-badge').forEach(b => {
+    b.classList.remove('flashing');
+    void b.offsetWidth;
+    b.classList.add('flashing');
+  });
+}
+
+function updateQueuedStatus() {
+  const box = document.getElementById('admin-queued-status');
+  if (!box) return;
+
+  const inps = {};
+  let anyInput = false;
+  document.querySelectorAll('.input-override').forEach(i => {
+    const name = i.dataset.coupon;
+    const v = i.value.trim();
+    if (v !== '') {
+      const num = parseInt(v, 10);
+      if (!isNaN(num) && num >= 0 && num <= 99) {
+        inps[name] = num;
+        anyInput = true;
+      }
+    }
+  });
+
+  const stored = (masterState && masterState.overrides) ? masterState.overrides : {};
+  const storedKeys = Object.keys(stored).filter(k => stored[k] !== '' && stored[k] !== undefined && stored[k] !== null);
+
+  if (anyInput) {
+    box.innerHTML = `<span style="color:var(--text-green);font-weight:700;">Ready to Save for Next 15-Min Draw:</span> ` +
+      Object.keys(inps).map(k => `<strong>${k}: ${String(inps[k]).padStart(2,'0')}</strong>`).join(' • ') +
+      ` <span style="color:var(--text-subtle);">(unspecified coupons will automatically randomize)</span>`;
+  } else if (storedKeys.length > 0) {
+    box.innerHTML = `<span style="color:var(--text-green);font-weight:700;">Active for Next 15-Min Draw:</span> ` +
+      storedKeys.map(k => `<strong>${k}: ${String(stored[k]).padStart(2,'0')}</strong>`).join(' • ') +
+      ` <span style="color:var(--text-subtle);">(other coupons will randomize automatically)</span>`;
+  } else {
+    box.innerHTML = `<span style="color:var(--text-blue);font-weight:600;">Next 15-Minute Draw:</span> All coupons will automatically randomize (00–99).`;
+  }
+}
+
+function renderHistoryTable() {
+  const tbody = document.getElementById('history-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  const list = (masterState && masterState.history) ? masterState.history : [];
+  if (list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-subtle);">No historical draws recorded yet.</td></tr>`;
+    return;
+  }
+
+  list.slice(0, 15).forEach(h => {
+    const tr = document.createElement('tr');
+    const n = (h.results && h.results['NAVRATNA']  !== undefined) ? String(h.results['NAVRATNA']).padStart(2,'0')  : '—';
+    const c = (h.results && h.results['CHETAK']    !== undefined) ? String(h.results['CHETAK']).padStart(2,'0')    : '—';
+    const r = (h.results && h.results['RAJA RANI'] !== undefined) ? String(h.results['RAJA RANI']).padStart(2,'0') : '—';
+
+    tr.innerHTML = `
+      <td><strong>${h.time}</strong></td>
+      <td style="color:var(--text-muted);font-size:0.75rem;">${h.date || ''}</td>
+      <td><span class="coupon-current-badge" style="font-size:0.85rem;padding:2px 8px;">${n}</span></td>
+      <td><span class="coupon-current-badge" style="font-size:0.85rem;padding:2px 8px;">${c}</span></td>
+      <td><span class="coupon-current-badge" style="font-size:0.85rem;padding:2px 8px;">${r}</span></td>
+      <td><span class="tag-auto">15-Min Auto</span></td>
+      <td><span style="color:var(--text-success);font-weight:600;">Verified</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function handleSaveOverrides() {
+  const newOverrides = {};
+  let count = 0;
+
+  document.querySelectorAll('.input-override').forEach(i => {
+    const name = i.dataset.coupon;
+    const v    = i.value.trim();
+    if (v !== '') {
+      const num = parseInt(v, 10);
+      if (!isNaN(num) && num >= 0 && num <= 99) {
+        newOverrides[name] = num;
+        count++;
+      }
+    }
+  });
+
+  const st = Object.assign({}, masterState, {
+    overrides: newOverrides,
+    updatedAt: Date.now()
+  });
+
+  saveState(st);
+  updateQueuedStatus();
+  updateDrawerQueuedStatus();
+
+  // Sync with server if running
+  fetch('http://localhost:8000/api/override', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ overrides: newOverrides })
+  }).catch(() => {});
+
+  if (count > 0) {
+    snack(`Saved ${count} number(s) for next 15-min draw! Site will update at draw time.`, 'success');
+  } else {
+    snack('No numbers entered — next 15-min draw will randomize all coupons automatically.', 'info');
+  }
+}
+
+function handleClearOverrides() {
+  document.querySelectorAll('.input-override').forEach(i => i.value = '');
+  document.querySelectorAll('.ad-inp-ov').forEach(i => i.value = '');
+  const st = Object.assign({}, masterState, {
+    overrides: {},
+    updatedAt: Date.now()
+  });
+  saveState(st);
+  updateQueuedStatus();
+  updateDrawerQueuedStatus();
+
+  fetch('http://localhost:8000/api/clear', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }).catch(() => {});
+
+  snack('Cleared! Next 15-min draw will automatically randomize all coupons.', 'info');
+}
+
+/* ════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════ */
+renderTable();
+initDrawLabels();
+checkScrollHint();
+renderOverrideTable();
+renderHistoryTable();
+updateQueuedStatus();
+checkViewHash();
+</script>
+</body>
+</html>

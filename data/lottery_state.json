@@ -1,0 +1,95 @@
+{
+  "coupons": [
+    {
+      "name": "NAVRATNA",
+      "win": 100,
+      "latest": 51
+    },
+    {
+      "name": "CHETAK",
+      "win": 100,
+      "latest": 72
+    },
+    {
+      "name": "RAJA RANI",
+      "win": 100,
+      "latest": 62
+    }
+  ],
+  "next_draw_ts": 1790853300.0,
+  "overrides": {},
+  "latest_draw": {
+    "id": "D-400763",
+    "time": "04:30 PM",
+    "date": "10/01/2026",
+    "timestamp": 1790852400763,
+    "results": {
+      "NAVRATNA": 51,
+      "CHETAK": 72,
+      "RAJA RANI": 62
+    },
+    "type": "auto"
+  },
+  "history": [
+    {
+      "id": "D-400763",
+      "time": "04:30 PM",
+      "date": "10/01/2026",
+      "timestamp": 1790852400763,
+      "results": {
+        "NAVRATNA": 51,
+        "CHETAK": 72,
+        "RAJA RANI": 62
+      },
+      "type": "auto"
+    },
+    {
+      "id": "D-800957",
+      "time": "03:30 PM",
+      "date": "10/01/2026",
+      "timestamp": 1790848800957,
+      "results": {
+        "NAVRATNA": 32,
+        "CHETAK": 37,
+        "RAJA RANI": 30
+      },
+      "type": "auto"
+    },
+    {
+      "id": "D-564865",
+      "time": "03:26 PM",
+      "date": "10/01/2026",
+      "timestamp": 1790848564865,
+      "results": {
+        "NAVRATNA": 88,
+        "CHETAK": 28,
+        "RAJA RANI": 11
+      },
+      "type": "manual"
+    },
+    {
+      "id": "D-404904",
+      "time": "03:23 PM",
+      "date": "10/01/2026",
+      "timestamp": 1790848404904,
+      "results": {
+        "NAVRATNA": 99,
+        "CHETAK": 44,
+        "RAJA RANI": 94
+      },
+      "type": "manual"
+    },
+    {
+      "id": "D-223938",
+      "time": "03:20 PM",
+      "date": "10/01/2026",
+      "timestamp": 1790848223938,
+      "results": {
+        "NAVRATNA": 88,
+        "CHETAK": 77,
+        "RAJA RANI": 24
+      },
+      "type": "manual"
+    }
+  ]
+}
